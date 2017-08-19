@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.active.dao.VersionExtMapper">
+
+	<select id="selectList" resultMap="com.active.dao.VersionMapper.BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="com.active.dao.VersionMapper.Base_Column_List" />
+		from version
+		where del_flag = '0'
+		order by os, create_date desc
+	</select>
+
+	<update id="deleteById" parameterType="java.lang.String">
+		update version
+		<set>
+			del_flag = "1"
+			where id = #{id,jdbcType=VARCHAR}
+		</set>
+	</update>
+
+	<select id="getVersion" resultMap="com.active.dao.VersionMapper.BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="com.active.dao.VersionMapper.Base_Column_List" />
+		from version
+		where del_flag = '0'
+		<if test="canal != null">
+			and canal = #{canal,jdbcType=VARCHAR}
+		</if>
+		<if test="os != null">
+			and os = #{os,jdbcType=VARCHAR}
+		</if>
+		order by create_date desc
+	</select>
+</mapper>

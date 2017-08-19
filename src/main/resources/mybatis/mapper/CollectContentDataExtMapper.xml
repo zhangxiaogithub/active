@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.active.dao.CollectContentDataExtMapper">
+	<update id="deleteById" parameterType="java.lang.String" >
+		update collect_content_data
+		<set >
+			del_flag = "1"
+			where id = #{id,jdbcType=VARCHAR}
+		</set>
+	</update>
+	
+	<!-- 分页查询信息 -->
+	<select id="findList" resultMap="com.active.dao.CollectContentDataMapper.BaseResultMap" parameterType="java.util.Map" >
+		SELECT
+			<include refid="com.active.dao.CollectContentDataMapper.Base_Column_List" />
+		FROM collect_content_data
+		WHERE del_flag = "0"
+		ORDER BY create_date desc
+		limit #{pageIndex,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 分页查询信息 -->
+	<select id="findListCount" resultType="java.lang.Long" parameterType="java.util.Map" >
+		SELECT
+			count(id)
+		FROM collect_content_data
+		WHERE del_flag = "0"
+	</select>
+</mapper>

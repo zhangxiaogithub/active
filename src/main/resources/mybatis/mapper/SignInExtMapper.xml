@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.active.dao.SignInExtMapper">
+	<select id="selectList" resultMap="com.active.dao.SignInMapper.BaseResultMap" parameterType="java.lang.String">
+		select
+			<include refid="com.active.dao.SignInMapper.Base_Column_List" />
+		from sign_in
+		where del_flag = '0'
+	</select>
+</mapper>

@@ -63,8 +63,7 @@ public final class RedisUtil {
 		}
 		Boolean result = false;
 		try {
-			ValueOperations<String, Object> vo = redisUtil.redisTemplate
-					.opsForValue();
+			ValueOperations<String, Object> vo = redisUtil.redisTemplate.opsForValue();
 			result = vo.setIfAbsent(key, value);
 			if (result && seconds > 0) {
 				redisUtil.redisTemplate.expire(key, seconds, TimeUnit.SECONDS);
@@ -85,14 +84,12 @@ public final class RedisUtil {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T getSet(String key, T value, Class<T> clazz,
-			long expireSeconds) {
+	public static <T> T getSet(String key, T value, Class<T> clazz, long expireSeconds) {
 		if (!redisEnable) {
 			return null;
 		}
 		try {
-			BoundValueOperations<String, Object> bvo = redisUtil.redisTemplate
-					.boundValueOps(key);
+			BoundValueOperations<String, Object> bvo = redisUtil.redisTemplate.boundValueOps(key);
 			T obj = (T) bvo.getAndSet(value);
 			if (expireSeconds > 0 && obj != null) {
 				bvo.expire(expireSeconds, TimeUnit.SECONDS);
@@ -117,8 +114,7 @@ public final class RedisUtil {
 			return null;
 		}
 		try {
-			BoundValueOperations<String, Object> bvo = redisUtil.redisTemplate
-					.boundValueOps(key);
+			BoundValueOperations<String, Object> bvo = redisUtil.redisTemplate.boundValueOps(key);
 			T obj = (T) bvo.getAndSet(value);
 			return obj;
 		} catch (Exception e) {
@@ -140,8 +136,7 @@ public final class RedisUtil {
 			return false;
 		}
 		try {
-			ValueOperations<String, Object> vo = redisUtil.redisTemplate
-					.opsForValue();
+			ValueOperations<String, Object> vo = redisUtil.redisTemplate.opsForValue();
 			if (seconds > 0) {
 				vo.set(key, value, seconds, TimeUnit.SECONDS);
 			} else {
@@ -213,8 +208,7 @@ public final class RedisUtil {
 		}
 		try {
 			for (String kp : prex) {
-				redisUtil.redisTemplate.delete(redisUtil.redisTemplate.keys(kp
-						+ "*"));
+				redisUtil.redisTemplate.delete(redisUtil.redisTemplate.keys(kp + "*"));
 			}
 		} catch (Exception e) {
 		}
@@ -247,8 +241,7 @@ public final class RedisUtil {
 			return null;
 		}
 		try {
-			BoundValueOperations<String, Object> bvo = redisUtil.redisTemplate
-					.boundValueOps(key);
+			BoundValueOperations<String, Object> bvo = redisUtil.redisTemplate.boundValueOps(key);
 			Object obj = bvo.get();
 			if (expireSeconds > 0 && obj != null) {
 				bvo.expire(expireSeconds, TimeUnit.SECONDS);
@@ -273,8 +266,7 @@ public final class RedisUtil {
 			return null;
 		}
 		try {
-			BoundValueOperations<String, Object> bvo = redisUtil.redisTemplate
-					.boundValueOps(key);
+			BoundValueOperations<String, Object> bvo = redisUtil.redisTemplate.boundValueOps(key);
 			T obj = (T) bvo.get();
 			if (expireSeconds > 0 && obj != null) {
 				bvo.expire(expireSeconds, TimeUnit.SECONDS);
@@ -308,8 +300,7 @@ public final class RedisUtil {
 			return false;
 		}
 		try {
-			BoundValueOperations<String, Object> bvo = redisUtil.redisTemplate
-					.boundValueOps(key);
+			BoundValueOperations<String, Object> bvo = redisUtil.redisTemplate.boundValueOps(key);
 			bvo.set(value);
 			bvo.persist();
 			return true;
@@ -328,8 +319,7 @@ public final class RedisUtil {
 	 */
 	public static Long push(String key, Object value, int expireSeconds) {
 		try {
-			BoundListOperations<String, Object> blo = redisUtil.redisTemplate
-					.boundListOps(key);
+			BoundListOperations<String, Object> blo = redisUtil.redisTemplate.boundListOps(key);
 			Long result = blo.leftPush(value);
 			if (expireSeconds > 0) {
 				blo.expire(expireSeconds, TimeUnit.SECONDS);
@@ -348,8 +338,7 @@ public final class RedisUtil {
 	 */
 	public static Object pop(String key) {
 		try {
-			BoundListOperations<String, Object> blo = redisUtil.redisTemplate
-					.boundListOps(key);
+			BoundListOperations<String, Object> blo = redisUtil.redisTemplate.boundListOps(key);
 			return blo.rightPop();
 		} catch (Exception e) {
 			return null;
@@ -366,8 +355,7 @@ public final class RedisUtil {
 	 */
 	public static Object bpop(int seconds, String key) {
 		try {
-			BoundListOperations<String, Object> blo = redisUtil.redisTemplate
-					.boundListOps(key);
+			BoundListOperations<String, Object> blo = redisUtil.redisTemplate.boundListOps(key);
 			return blo.rightPop(seconds, TimeUnit.SECONDS);
 		} catch (Exception e) {
 			return null;
@@ -385,8 +373,7 @@ public final class RedisUtil {
 	 */
 	public static Object rpoplpush(String key1, String key2) {
 		try {
-			return redisUtil.redisTemplate.opsForList().rightPopAndLeftPush(
-					key1, key2);
+			return redisUtil.redisTemplate.opsForList().rightPopAndLeftPush(key1, key2);
 		} catch (Exception e) {
 			return null;
 		}
@@ -418,8 +405,7 @@ public final class RedisUtil {
 	 */
 	public static Long rem(String key, Long count, Object value) {
 		try {
-			return redisUtil.redisTemplate.opsForList().remove(key, count,
-					value);
+			return redisUtil.redisTemplate.opsForList().remove(key, count, value);
 		} catch (Exception e) {
 			return 0L;
 		}
@@ -482,8 +468,7 @@ public final class RedisUtil {
 	 */
 	public static <T> Map<String, T> getMap(String key, Class<T> clazz) {
 		try {
-			BoundHashOperations<String, String, T> boundHashOperations = redisUtil.redisTemplate
-					.boundHashOps(key);
+			BoundHashOperations<String, String, T> boundHashOperations = redisUtil.redisTemplate.boundHashOps(key);
 			return boundHashOperations.entries();
 		} catch (Exception e) {
 			return null;
@@ -576,56 +561,6 @@ public final class RedisUtil {
 		return redisEnable;
 	}
 
-	//
-	// /**
-	// * 判断能否执行操作.
-	// *
-	// * @param userId
-	// * 用户名
-	// * @param actionName
-	// * 操作名称
-	// * @param expiredSeconds
-	// * 有效时间
-	// * @param maxCount
-	// * 最大执行次数
-	// * @param query
-	// * 其他参数条件
-	// * @param invokeTimes
-	// * 触发多少次执行次数
-	// * @return
-	// */
-	// public static boolean baseActionAssert(String userId, String actionName,
-	// int expiredSeconds, int maxCount, String query, int invokeTimes) {
-	// if (!RedisUtil.isRedisEnable()) {
-	// return true;
-	// }
-	// try {
-	// StringBuffer sb = new StringBuffer();
-	// sb.append(RedisConstant.ACTION_PREFIX);
-	// sb.append(actionName);
-	// sb.append(RedisConstant.USERID_PREFIX);
-	// sb.append(userId);
-	// if (StringUtils.isNotBlank(query)) {
-	// sb.append(RedisConstant.QUERY_PREFIX);
-	// sb.append(query);
-	// }
-	// String key = sb.toString();
-	// Integer count = RedisUtil.get(key, Integer.class);
-	// if (null == count) {
-	// count = 0;
-	// }
-	// count += invokeTimes;
-	// if (count <= maxCount) {
-	// RedisUtil.set(key, count, expiredSeconds);
-	// return true;
-	// }
-	// return false;
-	// } catch (Exception e) {
-	// return true;
-	// }
-	//
-	// }
-
 	/**
 	 * 向缓存中设置hash， 默认为永久
 	 * 
@@ -647,8 +582,7 @@ public final class RedisUtil {
 	 * @param seconds
 	 * @return
 	 */
-	public static boolean hset(String key, String field, Object value,
-			int seconds) {
+	public static boolean hset(String key, String field, Object value, int seconds) {
 		if (!redisEnable) {
 			return false;
 		}
@@ -663,15 +597,14 @@ public final class RedisUtil {
 		return hget(key, field, clazz, 0);
 	}
 
-	public static <T> T hget(String key, String field, Class<T> clazz,
-			int expireSeconds) {
+	@SuppressWarnings("unchecked")
+	public static <T> T hget(String key, String field, Class<T> clazz, int expireSeconds) {
 		if (!redisEnable) {
 			return null;
 		}
 		Object value = redisUtil.redisTemplate.boundHashOps(key).get(field);
 		if (expireSeconds > 0) {
-			redisUtil.redisTemplate
-					.expire(key, expireSeconds, TimeUnit.SECONDS);
+			redisUtil.redisTemplate.expire(key, expireSeconds, TimeUnit.SECONDS);
 		}
 		return (T) value;
 	}
@@ -698,8 +631,7 @@ public final class RedisUtil {
 		if (StringUtils.isBlank(value) || "NULL".equals(value)) {
 			return null;
 		}
-		try (ByteArrayInputStream bais = new ByteArrayInputStream(
-				value.getBytes("ISO-8859-1"));
+		try (ByteArrayInputStream bais = new ByteArrayInputStream(value.getBytes("ISO-8859-1"));
 				ObjectInputStream ois = new ObjectInputStream(bais);) {
 			return ois.readObject();
 		} catch (Exception e) {

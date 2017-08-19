@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.active.dao.ImageManageExtMapper" >
+	<select id="selectList" resultMap="com.active.dao.ImageManageMapper.BaseResultMap" parameterType="java.lang.String">
+		select
+			<include refid="com.active.dao.ImageManageMapper.Base_Column_List" />
+		from image_manage
+		where del_flag = '0'
+		and type = #{type,jdbcType=VARCHAR}
+	</select>
+</mapper>

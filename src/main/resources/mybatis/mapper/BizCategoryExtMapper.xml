@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.active.dao.BizCategoryExtMapper">
+	<update id="deleteById" parameterType="java.lang.String" >
+		update biz_category
+		<set >
+			del_flag = "1"
+			where id = #{id,jdbcType=VARCHAR}
+		</set>
+	</update>
+	
+	<!-- 分页查询信息 -->
+	<select id="findList" resultMap="com.active.dao.BizCategoryMapper.BaseResultMap" parameterType="java.util.Map" >
+		SELECT
+			<include refid="com.active.dao.BizCategoryMapper.Base_Column_List" />
+		FROM biz_category
+		WHERE del_flag = "0"
+		ORDER BY sort desc
+		limit #{pageIndex,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 分页查询信息 -->
+	<select id="findListCount" resultType="java.lang.Long" parameterType="java.util.Map" >
+		SELECT
+			count(id)
+		FROM biz_category
+		WHERE del_flag = "0"
+	</select>
+	
+	<select id="getBizCategoryType" resultMap="com.active.dao.BizCategoryMapper.BaseResultMap" parameterType="java.util.Map" >
+		SELECT
+			<include refid="com.active.dao.BizCategoryMapper.Base_Column_List" />
+		FROM biz_category
+		WHERE del_flag = "0"
+		ORDER BY sort desc
+	</select>
+</mapper>
